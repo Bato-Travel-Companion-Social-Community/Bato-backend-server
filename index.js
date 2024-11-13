@@ -3,8 +3,14 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 
+import { authRouter } from './routes/index.js';
+
 const app = express();
 app.use(bodyParser.json());
+
+
+// Routes
+
 
 mongoose.connect(process.env.MONGODB_URL)
     .then(() => {
