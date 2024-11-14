@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config.js';
 import {userModel} from '../../models/index.js';
 
 const login = async (req, res) => {
