@@ -19,7 +19,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-});
+    avatar : {
+        type: String,
+        required: false
+    },
+    bio : {
+        type: String,
+        required: false
+    },
+
+}, {timestamps: true}
+);
 
 const userModel = mongoose.model('User', userSchema);
 
