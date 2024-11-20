@@ -22,7 +22,9 @@ const signup = async (req, res) => {
         const passwordHash = bcrypt.hashSync(password, 10);
 
         // Creating a new user
-        const user = new userModel({ display_name, username, email, password: passwordHash });
+        const user = new userModel({ display_name, username, email, password: passwordHash, 
+            avatar: 'https://res.cloudinary.com/dhaq8ov6w/image/upload/v1732144212/wamseombmuexpwllqcz8.jpg',
+            bio: 'Hello, I am a new user' });
         await user.save(); // Saving the user document in the database
 
         // Creating a token
