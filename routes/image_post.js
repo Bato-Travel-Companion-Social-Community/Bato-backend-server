@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { getImagePosts } from '../controllers/index.js';
-import {uploadToCloudinary} from '../APIs/index.js';
+import { getImagePosts, addPost } from '../controllers/index.js';
 import multer from 'multer';  // Multer to handle file uploads
 
 
@@ -12,6 +11,7 @@ const upload = multer({ storage: storage });
 
 
 postRouter.get('/get_image_posts', getImagePosts);
+postRouter.post('/add_image_post', upload.array('images[]'), addPost);
 
 
 
