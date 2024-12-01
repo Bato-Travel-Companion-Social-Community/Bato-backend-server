@@ -1,4 +1,3 @@
-// uploadToCloudinary.js
 import cloudinary from './cloudinary_config.js';
 import { createReadStream } from 'streamifier';
 
@@ -9,18 +8,18 @@ import { createReadStream } from 'streamifier';
  * @returns {Promise<string>} - The secure URL of the uploaded image.
  */
 export async function uploadToCloudinary(fileBuffer, options = {}) {
-    return new Promise((resolve, reject) => {
-        const uploadStream = cloudinary.uploader.upload_stream(
-            options,
-            (error, result) => {
-                if (error) {
-                    return reject(error);
-                }
-                resolve(result.secure_url);
-            }
-        );
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      options, 
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        resolve(result.secure_url); // Return the URL of the uploaded image
+      }
+    );
 
-        // Stream the buffer to Cloudinary
-        createReadStream(fileBuffer).pipe(uploadStream);
-    });
+    // Stream the buffer to Cloudinary
+    createReadStream(fileBuffer).pipe(uploadStream);
+  });
 }
