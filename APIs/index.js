@@ -1,1 +1,1 @@
-export {uploadToCloudinary} from './cloudinary'
+export {uploadToCloudinary} from './cloudinary/index.js';

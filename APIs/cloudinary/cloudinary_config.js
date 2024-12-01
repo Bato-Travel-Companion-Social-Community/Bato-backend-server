@@ -10,9 +10,14 @@ cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
-})
-.then(() => console.log('Cloudinary configured successfully'));
+});
 
-// Functions
+// Check if configuration was successful
+if (cloudinary.config().cloud_name) {
+    console.log('Cloudinary configured successfully');
+} else {
+    console.error('Error configuring Cloudinary');
+}
 
-
+// Export the Cloudinary instance
+export default cloudinary;
