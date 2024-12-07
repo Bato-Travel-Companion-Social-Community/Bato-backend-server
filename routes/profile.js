@@ -3,7 +3,8 @@ import { getProfileDetails} from '../controllers/index.js';
 
 const profileRouter = Router();
 
-profileRouter.get('/my_profile_details', getProfileDetails);
+profileRouter.get('/get_my_profile_details', getProfileDetails);
+
 
 
 

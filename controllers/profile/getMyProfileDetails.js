@@ -1,4 +1,4 @@
-import 'dotenv/config.js';
+import jwt from 'jsonwebtoken';
 import { userModel } from '../../models/index.js';
 
 const getMyProfileDetails = async (req, res) => {
@@ -11,26 +11,21 @@ const getMyProfileDetails = async (req, res) => {
         let decoded;
         try {
             decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-            console.log("Decoded Token:", decoded);
         } catch (error) {
             return res.status(401).json({ message: 'Invalid or expired token' });
         }
 
         const userId = decoded.userId;
-        if (!userId) {
-            return res.status(400).json({ message: 'User ID not found in token' });
-        }
-
-        const user = await userModel.findById(userId);
+        const user = await userModel.findById(userId).select('display_name avatar');
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        res.status(200).json(user);
+        return res.status(200).json(user); // Send only the needed user data
     } catch (error) {
-        console.error('Error getting user profile:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        console.error('Error:', error);
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
-}
+};
 
 export default getMyProfileDetails;
