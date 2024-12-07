@@ -21,7 +21,7 @@ const getMyProfileDetails = async (req, res) => {
             return res.status(400).json({ message: 'User ID not found in token' });
         }
 
-        const user = await userModel.findById(userId).select(username, display_name, avatar, bio);
+        const user = await userModel.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
