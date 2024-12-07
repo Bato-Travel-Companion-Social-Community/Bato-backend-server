@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors'; // Import cors
 import 'dotenv/config';
 
-import { authRouter, postRouter } from './routes/index.js';
+import { authRouter, postRouter, profileRouter } from './routes/index.js';
 
 const app = express();
 
@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/post', postRouter);
+app.use('/api/profile', profileRouter);
 
 mongoose.connect(process.env.MONGODB_URL)
     .then(() => {
