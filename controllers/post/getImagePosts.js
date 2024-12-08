@@ -1,22 +1,36 @@
-import 'dotenv/config.js';
-import { imagePostModel } from '../../models/index.js'; 
+import "dotenv/config.js";
+import { imageTestPostModel } from "../../models/index.js";
+import jwt from "jsonwebtoken";
 
+// In your getImagePosts controller
 const getImagePosts = async (req, res) => {
-    try {
-        // Fetch image posts and populate 'ownerId' with 'display_name' and 'avatar'
-        const imagePosts = await imagePostModel
-            .find()
-            .populate('ownerId', 'display_name avatar') // Only fetch required fields from owner
-            .lean(); // Convert to plain JavaScript objects for better performance
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const userId = decoded.userId;
 
-        // Return the list of posts
-        res.status(200).json(imagePosts);
-    } catch (error) {
-        console.error("Error during getting image posts:", error);
-        res.status(500).json({
-            message: 'Error retrieving image posts',
-            error: error.message,
-        });
-    }
+    const posts = await imageTestPostModel
+      .find()
+      .populate("ownerId", "_id display_name avatar")
+      .populate("likes", "_id display_name avatar")
+      .populate("comments.user", "_id display_name avatar")
+      .lean()
+      .exec();
+
+    const postsWithLikeStatus = posts.map((post) => ({
+      ...post,
+      isLiked: post.likes.some(
+        (like) => like._id.toString() === userId.toString()
+      ),
+      likeCount: post.likes.length,
+      commentCount: post.comments?.length || 0,
+    }));
+
+    res.json(postsWithLikeStatus);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };
+
 export default getImagePosts;
