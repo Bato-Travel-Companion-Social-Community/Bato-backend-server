@@ -1,5 +1,5 @@
 import "dotenv/config.js";
-import { imageTestPostModel } from "../../models/index.js";
+import { imagePostModel } from "../../models/index.js";
 import jwt from "jsonwebtoken";
 
 // In your getImagePosts controller
@@ -9,7 +9,7 @@ const getImagePosts = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const userId = decoded.userId;
 
-    const posts = await imageTestPostModel
+    const posts = await imagePostModel
       .find()
       .populate("ownerId", "_id display_name avatar")
       .populate("likes", "_id display_name avatar")

@@ -1,11 +1,11 @@
 // controllers/post/getComments.js
-import { imageTestPostModel } from "../../models/index.js";
+import { imagePostModel } from "../../models/index.js";
 
 const getComments = async (req, res) => {
   try {
     const { postId } = req.params;
 
-    const post = await imageTestPostModel
+    const post = await imagePostModel
       .findById(postId)
       .populate("comments.user", "_id display_name avatar")
       .select("comments");

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { imageTestPostModel } from "../../models/index.js";
+import { imagePostModel } from "../../models/index.js";
 
 const addComment = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ const addComment = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const userId = decoded.userId;
 
-    const post = await imageTestPostModel.findById(postId);
+    const post = await imagePostModel.findById(postId);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
@@ -29,7 +29,7 @@ const addComment = async (req, res) => {
     await post.save();
 
     // Get the newly added comment with populated user
-    const updatedPost = await imageTestPostModel
+    const updatedPost = await imagePostModel
       .findById(postId)
       .populate("comments.user", "_id display_name avatar");
 

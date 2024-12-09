@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { imageTestPostModel } from "../../models/index.js";
+import { imagePostModel } from "../../models/index.js";
 
 const likeTestPost = async (req, res) => {
   try {
@@ -20,7 +20,7 @@ const likeTestPost = async (req, res) => {
     }
 
     const userId = decoded.userId;
-    const post = await imageTestPostModel.findById(postId);
+    const post = await imagePostModel.findById(postId);
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
@@ -43,7 +43,7 @@ const likeTestPost = async (req, res) => {
     await post.save();
 
     // Fetch the updated post with populated likes
-    const updatedPost = await imageTestPostModel
+    const updatedPost = await imagePostModel
       .findById(postId)
       .populate("likes", "_id display_name avatar")
       .lean();

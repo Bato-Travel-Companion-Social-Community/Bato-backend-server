@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const imagePostSchema = new mongoose.Schema(
   {
     images: {
-      type: [String], // Array of image URLs
+      type: [String],
       required: true,
     },
     caption: {
@@ -12,17 +12,48 @@ const imagePostSchema = new mongoose.Schema(
     },
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Reference to the User model
+      ref: "User",
       required: true,
     },
     location: {
       type: String,
       required: true,
     },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    likeCount: {
+      type: Number,
+      default: 0,
+    },
+    comments: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        text: {
+          type: String,
+          required: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    commentCount: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
 
-const imagePostModel = mongoose.model('PostImage', imagePostSchema);
+const imagePostModel = mongoose.model("PostImage", imagePostSchema);
 
 export default imagePostModel;

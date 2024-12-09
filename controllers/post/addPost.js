@@ -1,5 +1,5 @@
 import { uploadToCloudinary } from "../../APIs/index.js";
-import { imageTestPostModel } from "../../models/index.js";
+import { imagePostModel } from "../../models/index.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config.js";
 /**
@@ -45,7 +45,7 @@ const addPost = async (req, res) => {
     }
 
     // Create the new image post in the database
-    const newPost = new imageTestPostModel({
+    const newPost = new imagePostModel({
       images: imageUrls, // Store the Cloudinary image URLs
       caption,
       location,

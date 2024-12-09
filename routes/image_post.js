@@ -7,9 +7,7 @@ import {
   getComments,
 } from "../controllers/index.js";
 import multer from "multer"; // Multer to handle file uploads
-import { Router } from 'express';
-import { getImagePosts, addPost, getImagePostsByUser } from '../controllers/index.js';
-import multer from 'multer';  // Multer to handle file uploads
+
 
 
 const postRouter = Router();
@@ -24,9 +22,6 @@ postRouter.post("/test_post/:postId/like", likeTestPost);
 postRouter.post("/test_post/:postId/comment", addComment);
 postRouter.get("/test_post/:postId/comments", getComments);
 
-postRouter.get('/get_image_posts', getImagePosts);
-postRouter.get('/get_image_posts/:userId', getImagePostsByUser); 
-postRouter.post('/add_image_post', upload.array('images[]'), addPost);
 
 
 
